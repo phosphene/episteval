@@ -13,13 +13,13 @@ updated: 2026-11-10
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python: 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](pyproject.toml)
 
-`episteval` operationalizes formal epistemology and epistemic warrant auditing into automated evaluation harnesses. The engine evaluates candidate assertions, scientific claims, and synthetic agent reasoning traces through a **demonstrable warrant trail** across formal inference regimes.
+`episteval` operationalizes formal epistemology, hypothetico-deductive verification, and epistemic warrant auditing into automated evaluation harnesses. The engine evaluates candidate assertions, scientific propositions, and synthetic agent reasoning traces through a **demonstrable warrant trail** across formal inference regimes.
 
 ---
 
 ## 1. Architectural Foundations: The Dual-Faceted Object Model
 
-A central challenge in automated epistemic evaluation is reconciling two conflicting computational needs:
+A central challenge in automated epistemic evaluation is reconciling two complementary computational needs:
 1. **Ergonomic Consumption:** Downstream pipelines (ranking algorithms, loss functions, optimizer loops, scikit-learn suites, PyTorch tensors) require calibrated continuous scalar scores between $0.0$ and $1.0$.
 2. **Formal Provenance:** Scientific audits, peer review, and safety gates require an inspectable derivation hypergraph, premise dependency chain, and axiomatic regime envelope.
 
@@ -52,19 +52,19 @@ Simultaneously, `EpistemicState` preserves the underlying justification topology
 
 ---
 
-## 2. Invariant Epistemic Matrix (INFERNO)
+## 2. Invariant Epistemic Matrix
 
 `episteval` evaluates claims across four invariant levels and three evaluative dimensions:
 
 | Epistemic Level | Evaluative Focus | Verification Invariant |
 |---|---|---|
-| **$L_1$ Observation Grounding** | Primary Artifacts & Recensions | Grounding density; inspectable source recensions |
-| **$L_2$ Formalization & Schema** | Structured Premises & Typing | Explicit typed premises, predicates, and relations |
-| **$L_3$ Inferential Machinery** | Derivation Apparatus | Deductive validity, Bayesian update, or defeasible warrant |
-| **$L_4$ Boundary Conditions** | Scope & Falsifiability | Explicit domain boundaries and counterfactual resilience |
+| **$L_1$ Observation Grounding** | Primary Artifacts & Data | Grounding density; inspectable source citations and empirical logs |
+| **$L_2$ Formalization & Schema** | Structured Premises & Typing | Explicit typed premises, predicates, and formal relational schemas |
+| **$L_3$ Inferential Machinery** | Derivation Apparatus | Deductive validity, Bayesian updating, or defeasible warrant |
+| **$L_4$ Boundary Conditions** | Scope & Falsifiability | Explicit domain boundaries, counterfactual resilience, and null models |
 
 ### Multi-Regime Pluralism
-- **Deductive Monotonicity:** Verifies strict entailment ($P \vdash Q$) and flags contradictory defeaters.
+- **Deductive Monotonicity:** Verifies strict entailment ($P \vdash Q$) and flags contradictory defeaters (following Braithwaite's hypothetico-deductive canon).
 - **Defeasible Warrant:** Tracks premise vulnerability and non-monotonic defeat ($P \sim Q$).
 - **Subjective Bayesian Credence:** Calibrates degrees of belief ($P(H \mid E)$) against explicit priors and likelihood ratios.
 - **Modal Accessibility:** Tests whether an inferential claim survives counterfactual perturbations across accessible domains.
@@ -92,38 +92,38 @@ pip install "episteval[dev]"
 ### Python API
 
 ```python
-from episteval import Claim, InfernoMatrix, InferenceRegime
+from episteval import Claim, EpistemicMatrix, InferenceRegime
 
 # Define a candidate proposition
 claim = Claim(
-    claim_id="prop-spatial-ibd",
-    statement="Spatial Isolation-by-Distance explains folklore trait dissimilarity.",
+    claim_id="prop-keplerian-orbit",
+    statement="Radial velocity measurements match Keplerian orbital parameters.",
     regime=InferenceRegime.BAYESIAN,
     prior_credence=0.5,
-    sources=["urn:cts:phosphene:swanton.1909", "urn:cts:phosphene:boas.1916"],
+    sources=["doi:10.1086/123456", "arxiv:2301.00001"],
     premises=[
-        "Geographic distance impedes continuous oral diffusion.",
-        "Observed pairwise dissimilarity scales monotonically with distance."
+        "Gravitational potential governs stellar radial velocity curve.",
+        "Observed Doppler shift exhibits periodic sinusoidal perturbation."
     ],
     boundary_conditions=[
-        "Terrestrial continental zones; excludes maritime trade archipelagos."
+        "Single-star binary systems; excludes unresolved stellar clusters."
     ]
 )
 
-# Arbitrate through the invariant INFERNO matrix
-matrix = InfernoMatrix()
+# Arbitrate through the invariant epistemic matrix
+matrix = EpistemicMatrix()
 verdict = matrix.evaluate(claim)
-state = verdict.to_epistemic_state()
+state = verdict.to_epistemic_state(claim)
 
 # 1. Scalar Projection Axis: Direct numeric consumption
-print(f"Scalar warrant: {float(state):.2f}")     # 0.88
-print(f"Passes quality threshold: {state >= 0.8}") # True
+print(f"Scalar warrant: {float(state):.2f}")       # 0.88
+print(f"Passes quality threshold: {state >= 0.8}")   # True
 if state:
     print("Claim is certified warranted.")
 
 # 2. Structural Provenance Axis: Inspectable derivation graph
 graph = state.derivation_graph
-print(f"Tier: {graph['tier']}")                 # T1
+print(f"Tier: {graph['tier']}")                   # T1
 print(f"Premises: {len(graph['premises'])}")
 print(f"AST Root: {graph['ast']}")
 ```
@@ -133,11 +133,20 @@ print(f"AST Root: {graph['ast']}")
 Inspect and evaluate claims directly from JSON files:
 
 ```bash
-episteval check claim.json --profile comparative
+episteval check claim.json --profile synthetic
 ```
 
 ---
 
-## 5. License
+## 5. Epistemic Knowledge Base (Wiki)
+
+`episteval` maintains a canonical public reference wiki documenting the theoretical and historical foundations of automated scientific explanation and inference:
+- [Methodological Foundations: Braithwaite's Hypothetico-Deductive Apparatus](wiki/foundations/braithwaite-hypothetico-deductive.md)
+- [Testability, Generalization, and Non-Instantial Hypotheses: Wisdom's Canon](wiki/foundations/wisdom-testability-framework.md)
+- [The Epistemic Matrix: Lexicographic Gating and Warrant Levels](wiki/concepts/lexicographic-gating.md)
+
+---
+
+## 6. License
 
 MIT
