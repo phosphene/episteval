@@ -2,7 +2,7 @@
 
 import pytest
 from episteval.core.models import Claim, EpistemicState, EpistemicTier, InferenceRegime
-from episteval.core.matrix import InfernoMatrix
+from episteval.core.matrix import EpistemicMatrix
 
 
 def test_epistemic_state_numeric_projection():
@@ -62,15 +62,15 @@ def test_epistemic_state_sorting_and_filtering():
 
 
 def test_verdict_to_epistemic_state_projection():
-    matrix = InfernoMatrix()
+    matrix = EpistemicMatrix()
     claim = Claim(
         claim_id="spatial-1",
-        statement="Spatial isolation-by-distance correlates with trait divergence",
+        statement="Spatial dispersal distance scales inversely with trait correlation",
         regime=InferenceRegime.BAYESIAN,
         prior_credence=0.5,
-        sources=["source_a", "source_b"],
+        sources=["doi:10.1038/nature12345", "doi:10.1126/science.67890"],
         premises=["Distance impedes diffusion", "Observed dissimilarity increases with distance"],
-        boundary_conditions=["Continental terrestrial ecosystems"],
+        boundary_conditions=["Contiguous continental biomes"],
     )
 
     verdict = matrix.evaluate(claim)

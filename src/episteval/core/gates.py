@@ -1,4 +1,4 @@
-"""episteval.core.gates — Invariant epistemic gates across the 4 INFERNO levels."""
+"""episteval.core.gates — Invariant epistemic gates across the 4 epistemic evaluation levels."""
 
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ class EpistemicGate(ABC):
     @property
     @abstractmethod
     def level(self) -> EpistemicLevel:
-        """INFERNO level associated with this gate."""
+        """Epistemic level associated with this gate."""
         ...
 
     @property
