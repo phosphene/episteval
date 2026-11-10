@@ -20,7 +20,7 @@ from episteval.core.gates import (
     InferentialMachineryGate,
     ObservationGroundingGate,
 )
-from episteval.core.matrix import InfernoMatrix
+from episteval.core.matrix import EpistemicMatrix
 from episteval.profiles.base import DomainProfile
 from episteval.profiles.comparative import ComparativeHistoricalProfile
 from episteval.profiles.synthetic import SyntheticReasoningProfile
@@ -41,7 +41,7 @@ __all__ = [
     "FormalizationStructureGate",
     "InferentialMachineryGate",
     "BoundaryFalsifiabilityGate",
-    "InfernoMatrix",
+    "EpistemicMatrix",
     "DomainProfile",
     "ComparativeHistoricalProfile",
     "SyntheticReasoningProfile",
