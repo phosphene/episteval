@@ -10,9 +10,9 @@ from pydantic import BaseModel, ConfigDict, Field
 
 class EpistemicTier(str, Enum):
     """Certified warrant tier."""
-    T1 = "T1"  # High warrant / robust under counterfactual perturbation (WCI >= 80)
-    T2 = "T2"  # Provisional warrant / valid with methodological caveats (55 <= WCI < 80)
-    T3 = "T3"  # Defeated or ungrounded warrant (WCI < 55)
+    T1 = "T1"  # High warrant / robust under counterfactual perturbation (Warrant >= 80)
+    T2 = "T2"  # Provisional warrant / valid with methodological caveats (55 <= Warrant < 80)
+    T3 = "T3"  # Defeated or ungrounded warrant (Warrant < 55)
 
 
 class GateStatus(str, Enum):
@@ -31,7 +31,7 @@ class InferenceRegime(str, Enum):
 
 
 class EpistemicLevel(str, Enum):
-    """The four invariant INFERNO epistemic levels."""
+    """The four invariant epistemic evaluation levels."""
     L1_OBSERVATION = "L1_observation"          # Grounding in primary empirical artifacts
     L2_FORMALIZATION = "L2_formalization"      # Structural typing, relations, and schemas
     L3_INFERENCE = "L3_inference"              # Explicit inferential/derivation machinery

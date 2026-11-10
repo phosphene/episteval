@@ -7,7 +7,7 @@ import json
 import sys
 from pathlib import Path
 from episteval.core.models import Claim, InferenceRegime
-from episteval.core.matrix import InfernoMatrix
+from episteval.core.matrix import EpistemicMatrix
 from episteval.profiles.comparative import ComparativeHistoricalProfile
 from episteval.profiles.synthetic import SyntheticReasoningProfile
 
@@ -19,7 +19,7 @@ def main() -> None:
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    check_parser = subparsers.add_parser("check", help="Evaluate a claim JSON file against INFERNO gates.")
+    check_parser = subparsers.add_parser("check", help="Evaluate a claim JSON file against epistemic evaluation gates.")
     check_parser.add_argument("file", type=Path, help="Path to claim JSON file")
     check_parser.add_argument(
         "--profile",
@@ -49,7 +49,7 @@ def main() -> None:
             profile = SyntheticReasoningProfile()
             verdict = profile.evaluate(claim)
         else:
-            matrix = InfernoMatrix()
+            matrix = EpistemicMatrix()
             verdict = matrix.evaluate(claim)
 
         print("\n" + "=" * 60)

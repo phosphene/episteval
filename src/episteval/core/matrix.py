@@ -1,4 +1,4 @@
-"""episteval.core.matrix — 4-Level x 3-Dimension INFERNO Evaluation Matrix."""
+"""episteval.core.matrix — 4-Level x 3-Dimension Epistemic Evaluation Matrix."""
 
 from __future__ import annotations
 
@@ -21,8 +21,8 @@ from episteval.core.gates import (
 )
 
 
-class InfernoMatrix:
-    """The invariant INFERNO arbitration matrix.
+class EpistemicMatrix:
+    """The invariant 4-level epistemic arbitration matrix.
 
     Evaluates a claim across the 4 epistemic levels and resolves its warrant tier.
     """
