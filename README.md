@@ -1,39 +1,79 @@
-# episteval
+---
+uri: phosphene.tooling/episteval
+owner: edphos
+status: active
+license: MIT
+updated: 2026-11-10
+---
+
+# `episteval` — Epistemic Evaluation across Modality, Monotonicity, and Credence
 
 [![CI](https://github.com/phosphene/episteval/actions/workflows/ci.yml/badge.svg)](https://github.com/phosphene/episteval/actions/workflows/ci.yml)
 [![PyPI version](https://img.shields.io/pypi/v/episteval.svg)](https://pypi.org/project/episteval/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python: 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](pyproject.toml)
 
-**Epistemic evaluation across modality, monotonicity, and credence.**
-
-`episteval` operationalizes formal epistemology and epistemic warrant auditing into modern automated evaluation harnesses. Rather than evaluating whether a claim matches a static string or ground-truth label, `episteval` arbitrates whether an agent, model, or research claim possesses a **demonstrable warrant trail** across formal inference regimes.
-
----
-
-## Key Features
-
-1. **Shift from Accuracy to Warranted Assertibility:**
-   * Audits justification trails across formal and defeasible inference regimes.
-   * Lexicographic gating prevents cosmetic eloquence from masking ungrounded assertions.
-
-2. **Pluralism Across Inference Regimes:**
-   * **Deductive Monotonicity:** Verifies strict entailment ($P \vdash Q$) and flags contradictory defeaters.
-   * **Defeasible Warrant:** Tracks premise vulnerability and non-monotonic defeat ($P \sim Q$).
-   * **Subjective Bayesian Credence:** Calibrates degrees of belief ($P(H \mid E)$) against explicit priors.
-   * **Modal Accessibility:** Tests whether an inferential claim survives counterfactual perturbations across accessible domains.
-
-3. **The Invariant INFERNO Evaluation Matrix:**
-   * **$L_1$ Observation Grounding:** Anchors claims in inspectable primary artifacts and recensions.
-   * **$L_2$ Formalization & Schema:** Requires explicit, typed premises and structured relations.
-   * **$L_3$ Inferential Machinery:** Evaluates the derivation apparatus under the claimed regime.
-   * **$L_4$ Boundary Conditions:** Enforces explicit scope boundaries and empirical failure criteria.
-
-4. **Pluggable Domain Profiles:**
-   * Includes calibrated profiles for **Comparative Historical & Evolutionary Sciences** (elevating primary recension depth, spatial controls, and strict null models) and **Synthetic Reasoning** (evaluating agentic LLM planning traces).
+`episteval` operationalizes formal epistemology and epistemic warrant auditing into automated evaluation harnesses. The engine evaluates candidate assertions, scientific claims, and synthetic agent reasoning traces through a **demonstrable warrant trail** across formal inference regimes.
 
 ---
 
-## Installation
+## 1. Architectural Foundations: The Dual-Faceted Object Model
+
+A central challenge in automated epistemic evaluation is reconciling two conflicting computational needs:
+1. **Ergonomic Consumption:** Downstream pipelines (ranking algorithms, loss functions, optimizer loops, scikit-learn suites, PyTorch tensors) require calibrated continuous scalar scores between $0.0$ and $1.0$.
+2. **Formal Provenance:** Scientific audits, peer review, and safety gates require an inspectable derivation hypergraph, premise dependency chain, and axiomatic regime envelope.
+
+`episteval` resolves this tension through a polymorphic, dual-faceted object model: **`EpistemicState`**.
+
+```
+                        ┌───────────────────────────────────────┐
+                        │            EpistemicState             │
+                        └───────────────────┬───────────────────┘
+                                            │
+                    ┌───────────────────────┴───────────────────────┐
+                    ▼                                               ▼
+  ┌───────────────────────────────────┐           ┌───────────────────────────────────┐
+  │      Scalar Projection Axis       │           │    Structural Provenance Axis     │
+  │  Implements Python Numeric Model  │           │  Preserves Inferential Hypergraph │
+  ├───────────────────────────────────┤           ├───────────────────────────────────┤
+  │ - float(state) -> [0.0, 1.0]      │           │ - state.derivation_graph          │
+  │ - bool(state)  -> is_warranted    │           │ - state.premises (dependency chain│
+  │ - Operator dunders: <, <=, >, >=  │           │ - state.boundary_conditions       │
+  │ - Arithmetic: +, -, *, /          │           │ - state.defeaters & sensitivities │
+  │ - Direct numpy/scipy sort & filter│           │ - state.derivation_ast (Formal AST│
+  └───────────────────────────────────┘           └───────────────────────────────────┘
+```
+
+### The Scalar Projection Axis
+`EpistemicState` implements Python's numeric data model (`__float__`, `__bool__`, comparison, and arithmetic dunders). Downstream code treats the evaluation directly as a calibrated metric between $0.0$ and $1.0$, enabling straightforward thresholding, sorting, argmax selections, or integration into numerical scoring suites.
+
+### The Structural Provenance Axis
+Simultaneously, `EpistemicState` preserves the underlying justification topology. It exposes defeating conditions, premise sensitivities, modal operators, and the formal derivation AST, retaining the complete axiomatic system that generated the score.
+
+---
+
+## 2. Invariant Epistemic Matrix (INFERNO)
+
+`episteval` evaluates claims across four invariant levels and three evaluative dimensions:
+
+| Epistemic Level | Evaluative Focus | Verification Invariant |
+|---|---|---|
+| **$L_1$ Observation Grounding** | Primary Artifacts & Recensions | Grounding density; inspectable source recensions |
+| **$L_2$ Formalization & Schema** | Structured Premises & Typing | Explicit typed premises, predicates, and relations |
+| **$L_3$ Inferential Machinery** | Derivation Apparatus | Deductive validity, Bayesian update, or defeasible warrant |
+| **$L_4$ Boundary Conditions** | Scope & Falsifiability | Explicit domain boundaries and counterfactual resilience |
+
+### Multi-Regime Pluralism
+- **Deductive Monotonicity:** Verifies strict entailment ($P \vdash Q$) and flags contradictory defeaters.
+- **Defeasible Warrant:** Tracks premise vulnerability and non-monotonic defeat ($P \sim Q$).
+- **Subjective Bayesian Credence:** Calibrates degrees of belief ($P(H \mid E)$) against explicit priors and likelihood ratios.
+- **Modal Accessibility:** Tests whether an inferential claim survives counterfactual perturbations across accessible domains.
+
+---
+
+## 3. Installation
+
+Install via `pip`:
 
 ```bash
 pip install episteval
@@ -47,9 +87,9 @@ pip install "episteval[dev]"
 
 ---
 
-## Quickstart
+## 4. Usage
 
-### 1. Python API
+### Python API
 
 ```python
 from episteval import Claim, InfernoMatrix, InferenceRegime
@@ -73,15 +113,24 @@ claim = Claim(
 # Arbitrate through the invariant INFERNO matrix
 matrix = InfernoMatrix()
 verdict = matrix.evaluate(claim)
+state = verdict.to_epistemic_state()
 
-print(f"Tier: {verdict.tier.value}")            # T1
-print(f"Composite Score: {verdict.composite_score}/100")
-print(f"Warranted: {verdict.is_warranted}")      # True
+# 1. Scalar Projection Axis: Direct numeric consumption
+print(f"Scalar warrant: {float(state):.2f}")     # 0.88
+print(f"Passes quality threshold: {state >= 0.8}") # True
+if state:
+    print("Claim is certified warranted.")
+
+# 2. Structural Provenance Axis: Inspectable derivation graph
+graph = state.derivation_graph
+print(f"Tier: {graph['tier']}")                 # T1
+print(f"Premises: {len(graph['premises'])}")
+print(f"AST Root: {graph['ast']}")
 ```
 
-### 2. Command-Line Interface
+### Command-Line Interface
 
-Inspect and evaluate claim JSON files directly:
+Inspect and evaluate claims directly from JSON files:
 
 ```bash
 episteval check claim.json --profile comparative
@@ -89,6 +138,6 @@ episteval check claim.json --profile comparative
 
 ---
 
-## License
+## 5. License
 
-MIT License. See [LICENSE](LICENSE) for details.
+MIT
